@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"time"
 
 	"github.com/Higor-ViniciusDev/api/pkg/entity"
 )
@@ -18,7 +19,22 @@ type Produto struct {
 	ID        entity.ID `json:"id"`
 	Nome      string    `json:"nome"`
 	Preco     float64   `json:"preco"`
-	CreatedAt string    `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+func newProduto(nome string, preco float64) (*Produto, error) {
+	prod := &Produto{
+		ID:        entity.NewID(),
+		Nome:      nome,
+		Preco:     preco,
+		CreatedAt: time.Now(),
+	}
+
+	if prod.Validar() != nil {
+		return nil, prod.Validar()
+	}
+
+	return prod, nil
 }
 
 func (p *Produto) Validar() error {
