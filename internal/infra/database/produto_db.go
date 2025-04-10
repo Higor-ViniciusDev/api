@@ -14,9 +14,22 @@ func NovoProdutoDB(db *gorm.DB) *Produto {
 }
 
 // Find All com paginação
-// func (pr *Produto) ProcuraTodos(PaginasLimite int, ordem string) ([]entity.Produto, error) {
+func (pr *Produto) ProcuraTodos(limite, pagina int, ordem string) ([]entity.Produto, error) {
+	var products []entity.Produto
+	var err error
 
-// }
+	if ordem != "" && ordem != "asc" && ordem != "desc" {
+		ordem = "asc"
+	}
+
+	if limite != 0 && pagina != 0 {
+		err = pr.DB.Limit(limite).Offset(pagina).Order("created_at " + ordem).Find(&products).Error
+	} else {
+		err = pr.DB.Order("created_at " + ordem).Find(&products).Error
+	}
+
+	return products, err
+}
 
 func (pr *Produto) CreateProdutoDB(p *entity.Produto) error {
 	return pr.DB.Create(&p).Error
