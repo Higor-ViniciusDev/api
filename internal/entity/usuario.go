@@ -5,21 +5,21 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type User struct {
+type Usuario struct {
 	ID    entity.ID `json:"id"`
 	Nome  string    `json:"nome"`
 	Email string    `json:"email"`
 	Senha string    `json:"-"`
 }
 
-func NewUser(email, nome, senha string) (*User, error) {
+func NovoUsuario(email, nome, senha string) (*Usuario, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(senha), bcrypt.DefaultCost)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return &User{
+	return &Usuario{
 		ID:    entity.NewID(),
 		Nome:  nome,
 		Email: email,
@@ -27,7 +27,7 @@ func NewUser(email, nome, senha string) (*User, error) {
 	}, nil
 }
 
-func (u *User) ValidarSenha(senha string) bool {
+func (u *Usuario) ValidarSenha(senha string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Senha), []byte(senha))
 
 	return err == nil

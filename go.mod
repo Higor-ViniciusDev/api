@@ -8,6 +8,7 @@ require (
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/crypto v0.32.0
+	gorm.io/gorm v1.25.12
 )
 
 require (
@@ -15,6 +16,8 @@ require (
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
 	github.com/goccy/go-json v0.3.5 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/lestrrat-go/backoff/v2 v2.0.7 // indirect
 	github.com/lestrrat-go/httpcc v1.0.0 // indirect
 	github.com/lestrrat-go/iter v1.0.0 // indirect

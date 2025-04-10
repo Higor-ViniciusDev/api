@@ -7,7 +7,7 @@ import (
 )
 
 func TestNovoUsuario(t *testing.T) {
-	user, err := NewUser("teste@gmail.com", "Higor", "123456")
+	user, err := NovoUsuario("teste@gmail.com", "Higor", "123456")
 
 	assert.Nil(t, err, "Não pode houver erro na criação do usuario")
 	assert.NotEmpty(t, user.ID, "ID não pode ser vazio")
@@ -17,7 +17,7 @@ func TestNovoUsuario(t *testing.T) {
 }
 
 func TestValidarSenha(t *testing.T) {
-	user, _ := NewUser("teste@gmail.com", "Higor", "123456")
+	user, _ := NovoUsuario("teste@gmail.com", "Higor", "123456")
 
 	assert.True(t, user.ValidarSenha("123456"), "Senha deve ser válida")
 	assert.False(t, user.ValidarSenha("1234567"), "Senha deve ser inválida")
