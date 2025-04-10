@@ -9,7 +9,7 @@ type Usuario struct {
 	DB *gorm.DB
 }
 
-func (U *Usuario) Criar(s *entity.Usuario) error {
+func (U *Usuario) CreateUsuarioDB(s *entity.Usuario) error {
 	return U.DB.Create(&s).Error
 }
 
@@ -21,4 +21,8 @@ func (U *Usuario) ProcuraPorEmail(email string) (*entity.Usuario, error) {
 	}
 
 	return &usuario1, nil
+}
+
+func NovoUsuarioDB(db *gorm.DB) *Usuario {
+	return &Usuario{DB: db}
 }
