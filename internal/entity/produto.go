@@ -22,7 +22,7 @@ type Produto struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func newProduto(nome string, preco float64) (*Produto, error) {
+func NovoProduto(nome string, preco float64) (*Produto, error) {
 	prod := &Produto{
 		ID:        entity.NewID(),
 		Nome:      nome,

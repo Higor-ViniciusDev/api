@@ -23,7 +23,7 @@ func (pr *Produto) ProcuraTodos(limite, pagina int, ordem string) ([]entity.Prod
 	}
 
 	if limite != 0 && pagina != 0 {
-		err = pr.DB.Limit(limite).Offset(pagina).Order("created_at " + ordem).Find(&products).Error
+		err = pr.DB.Limit(limite).Offset((pagina - 1) * limite).Order("created_at " + ordem).Find(&products).Error
 	} else {
 		err = pr.DB.Order("created_at " + ordem).Find(&products).Error
 	}

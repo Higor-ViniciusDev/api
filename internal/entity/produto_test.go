@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewProduto(t *testing.T) {
-	prod, err := newProduto("caixa papelão 12", 64.64)
+	prod, err := NovoProduto("caixa papelão 12", 64.64)
 
 	assert.Nil(t, err, "Não pode haver error na criacao")
 	assert.Empty(t, prod.Nome, "Nome não pode ser vazio")
