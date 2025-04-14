@@ -1,0 +1,7 @@
+POST http://localhost:8080/produto/create
+Content-Type: application/json
+
+{
+    "name":"Meu Produto",
+    "preco": 100
+}

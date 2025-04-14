@@ -12,7 +12,7 @@ import (
 )
 
 func TestNovoProdutoBanco(t *testing.T) {
-	db, err := gorm.Open(sqlite.Open("file:memory"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
 
 	if err != nil {
 		t.Error(err)
@@ -130,7 +130,8 @@ func TestDeletaProduto(t *testing.T) {
 	newProductDb := NovoProdutoDB(db)
 	db.Create(&produto)
 
-	newProductDb.Apagar(produto.ID.String())
+	err = newProductDb.Apagar(produto.ID.String())
+	assert.Nil(t, err)
 
 	var produtoDeletado entity.Produto
 	err = db.First(&produtoDeletado, "id = ?", produto.ID).Error
