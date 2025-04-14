@@ -42,7 +42,7 @@ func (pr *Produto) AlteraProduto(p *entity.Produto) error {
 		return err
 	}
 
-	return pr.DB.Save(&p).Error
+	return pr.DB.Save(&entity.Produto{ID: p.ID, Nome: p.Nome, Preco: p.Preco}).Error
 }
 
 func (pr *Produto) ProcuraPorID(id string) (*entity.Produto, error) {

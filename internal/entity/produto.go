@@ -19,7 +19,7 @@ type Produto struct {
 	ID        entity.ID `json:"id"`
 	Nome      string    `json:"nome"`
 	Preco     float64   `json:"preco"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time
 }
 
 func NovoProduto(nome string, preco float64) (*Produto, error) {
