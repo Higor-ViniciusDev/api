@@ -19,12 +19,14 @@ func NovoUsuario(email, nome, senha string) (*Usuario, error) {
 		return nil, err
 	}
 
-	return &Usuario{
+	user := &Usuario{
 		ID:    entity.NewID(),
 		Nome:  nome,
 		Email: email,
 		Senha: string(hash),
-	}, nil
+	}
+
+	return user, nil
 }
 
 func (u *Usuario) ValidarSenha(senha string) bool {

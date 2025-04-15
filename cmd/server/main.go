@@ -27,13 +27,17 @@ func main() {
 	db.AutoMigrate(&entity.Produto{}, &entity.Usuario{})
 
 	produtoDB := database.NovoProdutoDB(db)
-	produtctHandler := handles.NovoProdutoHandle(produtoDB)
+	usuarioDB := database.NovoUsuarioDB(db)
 
+	produtctHandler := handles.NovoProdutoHandle(produtoDB)
+	usuarioHandler := handles.NovoUsuariohandler(usuarioDB)
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Post("/produto/create", produtctHandler.NovoProduto)
 	r.Get("/produtos/{id}", produtctHandler.BuscaProduto)
 	r.Put("/produto/{id}", produtctHandler.AlteraProduto)
+	r.Get("/produtos", produtctHandler.BuscaTodosProdutos)
 
+	r.Post("/usuario/create", usuarioHandler.NovoUsuario)
 	http.ListenAndServe(":8080", r)
 }
