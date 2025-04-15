@@ -10,3 +10,8 @@ type CreateUsuarioInpunt struct {
 	Email string `json:"email"`
 	Senha string `json:"senha"`
 }
+
+type GetJWT struct {
+	Email string `json:"email"`
+	Senha string `json:"senha"`
+}

@@ -16,7 +16,7 @@ type conf struct {
 	DBUsuario     string `mapstructure:"DB_USER"`
 	WebServerPort string `mapstructure:"WEB_SERVER_PORT"`
 	JWTSecret     string `mapstructure:"JWT_SECRET"`
-	JWTTempo      string `mapstructure:"JWT_EXPIRATION"`
+	JWTTempo      int    `mapstructure:"JWT_EXPIRATION"`
 	TolkenAuth    *jwtauth.JWTAuth
 }
 
