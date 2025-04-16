@@ -5,16 +5,36 @@ import (
 	"net/http"
 
 	"github.com/Higor-ViniciusDev/api/configs"
+	_ "github.com/Higor-ViniciusDev/api/docs"
 	"github.com/Higor-ViniciusDev/api/internal/entity"
 	"github.com/Higor-ViniciusDev/api/internal/infra/database"
 	"github.com/Higor-ViniciusDev/api/internal/infra/webserver/handles"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/jwtauth"
+	httpSwag "github.com/swaggo/http-swagger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
+// @title           Go Expert API Com JWT
+// @version         1.0
+// @description     Requisição de produto com API e autenticação.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   higor souza
+// @contact.url    https://www.linkedin.com/in/higor-vinicius-de-souza-a44b8416a/
+// @contact.email  higor.vinicius331@hotmail.com
+
+// @license.name  Full Cycle
+// @license.url   http://www.fullcycle.com.br
+
+// @host      localhost:8080
+// @BasePath  /
+
+// @securityDefinitions.apikey  ApiKeyauth
+// @in header
+// @name Authorization
 func main() {
 	configs, err := configs.LoadConfig("./")
 	if err != nil {
@@ -48,6 +68,7 @@ func main() {
 
 	r.Post("/usuario/create", usuarioHandler.NovoUsuario)
 	r.Post("/usuario/generateTolken", usuarioHandler.PegaJWT)
+	r.Get("/docs/*", httpSwag.Handler(httpSwag.URL("http://localhost:8080/docs/doc.json")))
 	http.ListenAndServe(":8080", r)
 }
 

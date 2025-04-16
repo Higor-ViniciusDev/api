@@ -83,7 +83,7 @@ func (h *ProdutoHandler) AlteraProduto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	produto.ID, err = pkgEntity.PaserID(id)
-
+	fmt.Println(produto)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return

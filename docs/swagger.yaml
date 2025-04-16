@@ -1,0 +1,59 @@
+basePath: /
+definitions:
+  dto.CreateUsuarioInpunt:
+    properties:
+      email:
+        type: string
+      nome:
+        type: string
+      senha:
+        type: string
+    type: object
+  handles.Error:
+    properties:
+      menssagem:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: higor.vinicius331@hotmail.com
+    name: higor souza
+    url: https://www.linkedin.com/in/higor-vinicius-de-souza-a44b8416a/
+  description: Requisição de produto com API e autenticação.
+  license:
+    name: Full Cycle
+    url: http://www.fullcycle.com.br
+  termsOfService: http://swagger.io/terms/
+  title: Go Expert API Com JWT
+  version: "1.0"
+paths:
+  /usuario/create:
+    post:
+      consumes:
+      - application/json
+      description: Cria novo usuario
+      parameters:
+      - description: usuario request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUsuarioInpunt'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      tags:
+      - usuario
+securityDefinitions:
+  ApiKeyauth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

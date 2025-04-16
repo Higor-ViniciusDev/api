@@ -12,6 +12,10 @@ import (
 	"github.com/go-chi/jwtauth"
 )
 
+type Error struct {
+	Mensagem string `json:"menssagem"`
+}
+
 type UsuarioHandler struct {
 	UserDB   database.UsuarioInterface
 	Jwt      *jwtauth.JWTAuth
@@ -26,6 +30,16 @@ func NovoUsuariohandler(db database.UsuarioInterface, jwt *jwtauth.JWTAuth, temp
 	}
 }
 
+// Novo usuario godoc
+// @Sumary NovoUsuario usuario
+// @Description Cria novo usuario
+// @Tags usuario
+// @Accept json
+// @Produce json
+// @Param request body dto.CreateUsuarioInpunt true "usuario request"
+// @Success 201
+// @Failure 500  {object} Error
+// @Router /usuario/create [post]
 func (h *UsuarioHandler) NovoUsuario(w http.ResponseWriter, r *http.Request) {
 	var usuarioInput dto.CreateUsuarioInpunt
 
@@ -54,6 +68,8 @@ func (h *UsuarioHandler) PegaJWT(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		erros := Error{Mensagem: err.Error()}
+		json.NewEncoder(w).Encode(erros)
 		return
 	}
 
@@ -62,11 +78,15 @@ func (h *UsuarioHandler) PegaJWT(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
+		erros := Error{Mensagem: err.Error()}
+		json.NewEncoder(w).Encode(erros)
 		return
 	}
 
 	if !u.ValidarSenha(JWTDto.Senha) {
 		w.WriteHeader(http.StatusUnauthorized)
+		erros := Error{Mensagem: "Senha incorreta"}
+		json.NewEncoder(w).Encode(erros)
 		return
 	}
 

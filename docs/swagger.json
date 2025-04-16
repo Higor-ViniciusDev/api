@@ -1,0 +1,89 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Requisição de produto com API e autenticação.",
+        "title": "Go Expert API Com JWT",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "higor souza",
+            "url": "https://www.linkedin.com/in/higor-vinicius-de-souza-a44b8416a/",
+            "email": "higor.vinicius331@hotmail.com"
+        },
+        "license": {
+            "name": "Full Cycle",
+            "url": "http://www.fullcycle.com.br"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/usuario/create": {
+            "post": {
+                "description": "Cria novo usuario",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "usuario"
+                ],
+                "parameters": [
+                    {
+                        "description": "usuario request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateUsuarioInpunt"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handles.Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CreateUsuarioInpunt": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                }
+            }
+        },
+        "handles.Error": {
+            "type": "object",
+            "properties": {
+                "menssagem": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyauth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
