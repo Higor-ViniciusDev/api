@@ -1,5 +1,12 @@
 basePath: /
 definitions:
+  dto.CreateProdutoInput:
+    properties:
+      nome:
+        type: string
+      preco:
+        type: number
+    type: object
   dto.CreateUsuarioInpunt:
     properties:
       email:
@@ -8,6 +15,29 @@ definitions:
         type: string
       senha:
         type: string
+    type: object
+  dto.GetJWT:
+    properties:
+      email:
+        type: string
+      senha:
+        type: string
+    type: object
+  dto.GetJWTOutput:
+    properties:
+      access_tolken:
+        type: string
+    type: object
+  entity.Produto:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      nome:
+        type: string
+      preco:
+        type: number
     type: object
   handles.Error:
     properties:
@@ -28,6 +58,146 @@ info:
   title: Go Expert API Com JWT
   version: "1.0"
 paths:
+  /produtos:
+    get:
+      consumes:
+      - application/json
+      description: Buscar Todos os produtos
+      parameters:
+      - description: pagina
+        in: query
+        name: page
+        type: string
+      - description: limite result
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Produto'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - produto
+  /produtos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delata um produto
+      parameters:
+      - description: produto ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Delata um produto
+      tags:
+      - produto
+    get:
+      consumes:
+      - application/json
+      description: Buscar um produto especifico por ID
+      parameters:
+      - description: produto ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Produto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - produto
+    put:
+      consumes:
+      - application/json
+      description: Altera Produto Existente
+      parameters:
+      - description: id
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: produto request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateProdutoInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - produto
+  /produtos/create:
+    post:
+      consumes:
+      - application/json
+      description: Cria novo usuario
+      parameters:
+      - description: produto request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateProdutoInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - produto
   /usuario/create:
     post:
       consumes:
@@ -51,8 +221,37 @@ paths:
             $ref: '#/definitions/handles.Error'
       tags:
       - usuario
+  /usuario/generateTolken:
+    post:
+      consumes:
+      - application/json
+      description: Gerar Novo Tolken de acesso
+      parameters:
+      - description: usuario credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GetJWT'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.GetJWTOutput'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handles.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handles.Error'
+      tags:
+      - usuario
 securityDefinitions:
-  ApiKeyauth:
+  ApiKeyAuth:
     in: header
     name: Authorization
     type: apiKey

@@ -23,6 +23,17 @@ func NovoProdutoHandle(db database.ProdutoInterface) *ProdutoHandler {
 	}
 }
 
+// Novo Produto godoc
+// @Sumary NovoProduto produto
+// @Description Cria novo usuario
+// @Tags produto
+// @Accept json
+// @Produce json
+// @Param request body dto.CreateProdutoInput true "produto request"
+// @Success 201
+// @Failure 500  {object} Error
+// @Router /produtos/create [post]
+// @Security ApiKeyAuth
 func (h *ProdutoHandler) NovoProduto(w http.ResponseWriter, r *http.Request) {
 	var produtoInput dto.CreateProdutoInput
 
@@ -49,6 +60,17 @@ func (h *ProdutoHandler) NovoProduto(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// Buscar Produto godoc
+// @Sumary BuscaProduto produto
+// @Description Buscar um produto especifico por ID
+// @Tags produto
+// @Accept json
+// @Produce json
+// @Param 	id path string true "produto ID" format(uuid)
+// @Success 200 {object} entity.Produto
+// @Failure 500  {object} Error
+// @Router /produtos/{id} [get]
+// @Security ApiKeyAuth
 func (h *ProdutoHandler) BuscaProduto(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
@@ -67,6 +89,18 @@ func (h *ProdutoHandler) BuscaProduto(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(produto)
 }
 
+// Altera Produto godoc
+// @Sumary AlteraProduto produto
+// @Description Altera Produto Existente
+// @Tags produto
+// @Accept json
+// @Produce json
+// @Param  id path string true "id" format(uuid)
+// @Param  request body dto.CreateProdutoInput true "produto request"
+// @Success 201
+// @Failure 500  {object} Error
+// @Router /produtos/{id} [put]
+// @Security ApiKeyAuth
 func (h *ProdutoHandler) AlteraProduto(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
@@ -82,10 +116,15 @@ func (h *ProdutoHandler) AlteraProduto(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
 	produto.ID, err = pkgEntity.PaserID(id)
-	fmt.Println(produto)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	_, err = h.ProdutoDB.ProcuraPorID(id)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
@@ -95,10 +134,21 @@ func (h *ProdutoHandler) AlteraProduto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("Produto alterado com sucesso")
 	w.WriteHeader(http.StatusOK)
 }
 
+// DeletaProduto godoc
+// @Summary      Delata um produto
+// @Description  Delata um produto
+// @Tags         produto
+// @Accept       json
+// @Produce      json
+// @Param        id   path  string true  "produto ID" Format(uuid)
+// @Success      200
+// @Failure      404
+// @Failure      500       {object}  Error
+// @Router       /produtos/{id} [delete]
+// @Security ApiKeyAuth
 func (h *ProdutoHandler) DeletaProduto(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
@@ -118,6 +168,18 @@ func (h *ProdutoHandler) DeletaProduto(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Buscar Todos Produto godoc
+// @Sumary BuscaTodosProdutos produto
+// @Description Buscar Todos os produtos
+// @Tags produto
+// @Accept json
+// @Produce json
+// @Param 	page query string false "pagina"
+// @Param 	limit query string false "limite result"
+// @Success 200 {array} entity.Produto
+// @Failure 500  {object} Error
+// @Router /produtos [get]
+// @Security ApiKeyAuth
 func (h *ProdutoHandler) BuscaTodosProdutos(w http.ResponseWriter, r *http.Request) {
 	page := r.URL.Query().Get("page")
 	limit := r.URL.Query().Get("limit")

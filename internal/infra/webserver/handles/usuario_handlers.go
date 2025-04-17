@@ -47,6 +47,8 @@ func (h *UsuarioHandler) NovoUsuario(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		erros := Error{Mensagem: err.Error()}
+		json.NewEncoder(w).Encode(erros)
 		return
 	}
 
@@ -54,6 +56,8 @@ func (h *UsuarioHandler) NovoUsuario(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		erros := Error{Mensagem: err.Error()}
+		json.NewEncoder(w).Encode(erros)
 		return
 	}
 
@@ -61,6 +65,17 @@ func (h *UsuarioHandler) NovoUsuario(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Gerar Novo JWT godoc
+// @Sumary Gerar Novo Tolken de acesso
+// @Description Gerar Novo Tolken de acesso
+// @Tags usuario
+// @Accept json
+// @Produce json
+// @Param request body dto.GetJWT true "usuario credentials"
+// @Success 200 {object} dto.GetJWTOutput
+// @Failure 404  {object} Error
+// @Failure 500  {object} Error
+// @Router /usuario/generateTolken [post]
 func (h *UsuarioHandler) PegaJWT(w http.ResponseWriter, r *http.Request) {
 	var JWTDto dto.GetJWT
 
@@ -77,7 +92,7 @@ func (h *UsuarioHandler) PegaJWT(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(u)
 
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
+		w.WriteHeader(http.StatusNotFound)
 		erros := Error{Mensagem: err.Error()}
 		json.NewEncoder(w).Encode(erros)
 		return
@@ -94,11 +109,8 @@ func (h *UsuarioHandler) PegaJWT(w http.ResponseWriter, r *http.Request) {
 		"sub": u.ID.String(),
 		"exp": time.Now().Add(time.Second * time.Duration(h.JwtTempo)).Unix(),
 	})
-	tolken := struct {
-		AccessTolken string `json:"access_tolken"`
-	}{
-		AccessTolken: tolkenString,
-	}
+
+	tolken := dto.GetJWTOutput{AccessTolken: tolkenString}
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(tolken)

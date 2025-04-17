@@ -15,3 +15,7 @@ type GetJWT struct {
 	Email string `json:"email"`
 	Senha string `json:"senha"`
 }
+
+type GetJWTOutput struct {
+	AccessTolken string `json:"access_tolken"`
+}

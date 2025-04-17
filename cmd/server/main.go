@@ -32,7 +32,7 @@ import (
 // @host      localhost:8080
 // @BasePath  /
 
-// @securityDefinitions.apikey  ApiKeyauth
+// @securityDefinitions.apikey  ApiKeyAuth
 // @in header
 // @name Authorization
 func main() {
@@ -64,6 +64,7 @@ func main() {
 		r.Get("/{id}", produtctHandler.BuscaProduto)
 		r.Put("/{id}", produtctHandler.AlteraProduto)
 		r.Get("/", produtctHandler.BuscaTodosProdutos)
+		r.Delete("/{id}", produtctHandler.DeletaProduto)
 	})
 
 	r.Post("/usuario/create", usuarioHandler.NovoUsuario)
