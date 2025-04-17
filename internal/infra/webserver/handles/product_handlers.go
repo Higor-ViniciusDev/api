@@ -24,7 +24,7 @@ func NovoProdutoHandle(db database.ProdutoInterface) *ProdutoHandler {
 }
 
 // Novo Produto godoc
-// @Sumary NovoProduto produto
+// @Summary NovoProduto produto
 // @Description Cria novo usuario
 // @Tags produto
 // @Accept json
@@ -61,7 +61,7 @@ func (h *ProdutoHandler) NovoProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 // Buscar Produto godoc
-// @Sumary BuscaProduto produto
+// @Summary BuscaProduto produto
 // @Description Buscar um produto especifico por ID
 // @Tags produto
 // @Accept json
@@ -90,7 +90,7 @@ func (h *ProdutoHandler) BuscaProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 // Altera Produto godoc
-// @Sumary AlteraProduto produto
+// @Summary Altera um produto
 // @Description Altera Produto Existente
 // @Tags produto
 // @Accept json
@@ -138,8 +138,8 @@ func (h *ProdutoHandler) AlteraProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 // DeletaProduto godoc
-// @Summary      Delata um produto
-// @Description  Delata um produto
+// @Summary      Deleta um produto
+// @Description  Deleta um produto
 // @Tags         produto
 // @Accept       json
 // @Produce      json
@@ -169,7 +169,7 @@ func (h *ProdutoHandler) DeletaProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 // Buscar Todos Produto godoc
-// @Sumary BuscaTodosProdutos produto
+// @Summary BuscaTodosProdutos produto
 // @Description Buscar Todos os produtos
 // @Tags produto
 // @Accept json

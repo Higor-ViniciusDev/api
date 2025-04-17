@@ -31,7 +31,7 @@ func NovoUsuariohandler(db database.UsuarioInterface, jwt *jwtauth.JWTAuth, temp
 }
 
 // Novo usuario godoc
-// @Sumary NovoUsuario usuario
+// @Summary NovoUsuario usuario
 // @Description Cria novo usuario
 // @Tags usuario
 // @Accept json
@@ -66,7 +66,7 @@ func (h *UsuarioHandler) NovoUsuario(w http.ResponseWriter, r *http.Request) {
 }
 
 // Gerar Novo JWT godoc
-// @Sumary Gerar Novo Tolken de acesso
+// @Summary Gerar Novo Tolken de acesso
 // @Description Gerar Novo Tolken de acesso
 // @Tags usuario
 // @Accept json

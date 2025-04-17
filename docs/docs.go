@@ -91,6 +91,7 @@ const docTemplate = `{
                 "tags": [
                     "produto"
                 ],
+                "summary": "NovoProduto produto",
                 "parameters": [
                     {
                         "description": "produto request",
@@ -132,6 +133,7 @@ const docTemplate = `{
                 "tags": [
                     "produto"
                 ],
+                "summary": "BuscaProduto produto",
                 "parameters": [
                     {
                         "type": "string",
@@ -173,6 +175,7 @@ const docTemplate = `{
                 "tags": [
                     "produto"
                 ],
+                "summary": "Altera um produto",
                 "parameters": [
                     {
                         "type": "string",
@@ -210,7 +213,7 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Delata um produto",
+                "description": "Deleta um produto",
                 "consumes": [
                     "application/json"
                 ],
@@ -220,7 +223,7 @@ const docTemplate = `{
                 "tags": [
                     "produto"
                 ],
-                "summary": "Delata um produto",
+                "summary": "Deleta um produto",
                 "parameters": [
                     {
                         "type": "string",
@@ -259,6 +262,7 @@ const docTemplate = `{
                 "tags": [
                     "usuario"
                 ],
+                "summary": "NovoUsuario usuario",
                 "parameters": [
                     {
                         "description": "usuario request",
@@ -295,6 +299,7 @@ const docTemplate = `{
                 "tags": [
                     "usuario"
                 ],
+                "summary": "Gerar Novo Tolken de acesso",
                 "parameters": [
                     {
                         "description": "usuario credentials",
